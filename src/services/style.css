@@ -1,0 +1,23 @@
+.s1 {
+  color: #444;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin: 1rem;
+}
+.s1:before,
+.s1:after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  display: block;
+}
+.s1:before {
+  margin-right: 0.4em;
+  background: linear-gradient(-90deg, #888, transparent);
+}
+.s1:after {
+  margin-left: 0.4em;
+  background: linear-gradient(90deg, #888, transparent);
+}
