@@ -33,8 +33,14 @@ const Page = props => {
     <div style={{ contentsStyle }}>
       <AppBar position="static" style={headerStyle}>
         <div style={headerTextStyle}>MusicRanking</div>
-        <Button color="inherit" style={{ marginLeft: 'auto' }}>
-          Login
+        <Button
+          color="inherit"
+          style={{ marginLeft: 'auto' }}
+          onClick={() => {
+            props.pushScreen('/Favorite/');
+          }}
+        >
+          MyList
         </Button>
       </AppBar>
       <div style={backgroundImageStyle}>
@@ -111,7 +117,13 @@ const Page = props => {
           alignContent: 'flex-end',
         }}
       >
-        <TilePage />
+        <TilePage
+          onClickFavoriteButton={e => {
+            props.onClickFavoriteButton(e);
+          }}
+          favoriteList={props.favoriteList}
+          tileData={props.allTileData}
+        />
       </div>
       <div
         style={{
@@ -228,6 +240,9 @@ Page.propTypes = {
   categories: PropTypes.array.isRequired,
   handleChange: PropTypes.func,
   pushScreen: PropTypes.func,
+  onClickFavoriteButton: PropTypes.func,
+  favoriteList: PropTypes.array,
+  allTileData: PropTypes.array,
 };
 
 export default Page;

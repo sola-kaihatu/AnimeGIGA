@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import Home from './pages/Home/Container';
 import Search from './pages/Search/Container';
+import Favorite from './pages/Favorite/Container';
 import Setting from './pages/Setting/Container';
+import { ReportListContext } from './';
 
 class App extends Component {
   constructor() {
     super();
-    this.onClickChange = this.onClickChange.bind(this);
+    this.state = {
+      reportListCol: 2,
+    };
     this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
@@ -25,18 +29,14 @@ class App extends Component {
       // console.log(vh2, window.parent.screen.height);
       // document.documentElement.style.setProperty('--full-vh', `${vh}px`);
       document.documentElement.style.setProperty('--mobileVh', `${vh2}px`);
+      this.setState({ reportListCol: 1 });
+    } else if (
+      window.matchMedia('(min-width: 600px) and (max-width: 959px)').matches
+    ) {
+      this.setState({ reportListCol: 3 });
+    } else if (window.matchMedia('(min-width:960px)').matches) {
+      this.setState({ reportListCol: 4 });
     }
-    // } else if (
-    //   window.matchMedia('(min-width: 600px) and (max-width: 959px)').matches
-    // ) {
-    //   this.setState({ reportListCol: 4 });
-    // } else if (window.matchMedia('(min-width:960px)').matches) {
-    //   this.setState({ reportListCol: 5 });
-    // }
-  }
-
-  onClickChange() {
-    // this.props.history.push('/Setting/');
   }
 
   render() {
@@ -49,11 +49,18 @@ class App extends Component {
           backgroundColor: 'lightGray',
         }}
       >
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/Search/:id" component={Search} />
-          <Route path="/Setting/" component={Setting} />
-        </Switch>
+        <ReportListContext.Provider
+          value={{
+            reportListCol: this.state.reportListCol,
+          }}
+        >
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/Search/:id" component={Search} />
+            <Route path="/Favorite/" component={Favorite} />
+            <Route path="/Setting/" component={Setting} />
+          </Switch>
+        </ReportListContext.Provider>
       </div>
     );
   }

@@ -7,7 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
-import tileData from '../services/tileData';
+// import tileData from '../services/tileData';
 import noImage from '../services/img/noImage.png';
 
 function TitlebarGridList(props) {
@@ -16,7 +16,7 @@ function TitlebarGridList(props) {
   return (
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={4}>
-        {tileData.tileData.map(tile => (
+        {props.tileData.map(tile => (
           <GridListTile
             key={tile.id}
             style={{
@@ -29,9 +29,9 @@ function TitlebarGridList(props) {
               objectFit: 'cover',
               objectPosition: 'top',
             }}
-            onClick={() => {
-              alert('クリックなう');
-            }}
+            // onClick={() => {
+            //   alert('クリックなう');
+            // }}
           >
             <img src={tile.img ? tile.img : noImage} />
             <GridListTileBar
@@ -39,7 +39,11 @@ function TitlebarGridList(props) {
               subtitle={<span>by: {tile.singer}</span>}
               actionIcon={
                 <IconButton className={classes.icon}>
-                  <InfoIcon />
+                  <InfoIcon
+                  // onClick={() => {
+                  //   alert('クリックなう');
+                  // }}
+                  />
                 </IconButton>
               }
             />
@@ -56,6 +60,7 @@ const styles = () => ({
     // flexWrap: 'wrap',
     // overflow: 'scroll',
     width: '90%',
+    marginTop: '10px',
   },
   gridList: {
     width: '100%',
@@ -69,12 +74,7 @@ const styles = () => ({
 
 TitlebarGridList.propTypes = {
   classes: PropTypes.object.isRequired,
-  reportList: PropTypes.array,
-  onReport: PropTypes.func,
-};
-
-TitlebarGridList.defaultProps = {
-  reportList: [],
+  tileData: PropTypes.array,
 };
 
 export default withStyles(styles)(TitlebarGridList);

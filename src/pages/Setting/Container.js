@@ -1,42 +1,64 @@
 import React, { Component } from 'react';
 import Page from './Page';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
 import tileData from '../../services/tileData';
+import { getAnimeList, getYoutubeData } from '../../services/api';
 
-class Home extends Component {
+class Setting extends Component {
   constructor() {
     super();
     this.state = {
-      category: '0',
-      categories: tileData.AgeList,
+      animeData: [],
+      animePv: [],
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.pushScreen = this.pushScreen.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  async componentDidMount() {
+    const animeData = await this.getAnimeList();
+    console.log('animeData', animeData);
+    const animePv = [];
+    for (let i = 0; i < animeData.length; i++) {
+      // APIを呼ぶかどうかで切り替える
+      // const res = await this.getYoutubeList(animeData[i].title + ' PV');
+      const res = [];
+      animePv.push(res.length === 0 ? tileData.animeYoutubeLocalData[i] : res);
+    }
+    console.log(animePv);
+
+    this.setState({ animeData, animePv });
   }
 
-  pushScreen(routeUrl) {
-    this.props.history.push(routeUrl);
+  async getAnimeList() {
+    const { response, error } = await getAnimeList();
+    if (error) {
+      console.log('getAnimeListエラーだわ');
+      return {};
+    }
+    return response.data;
+  }
+
+  async getYoutubeList(searchWord) {
+    const params = {
+      q: searchWord,
+      part: 'snippet',
+      type: 'video',
+      maxResults: '1', // 最大検索数
+      key: 'AIzaSyDxGKnE9Kwxz3fiRzZ_qOausEXWXct8bTc',
+    };
+    const { response, error } = await getYoutubeData(params);
+    if (error) {
+      console.log('getYoutubeListエラーだわ');
+      return '';
+    }
+    return response.data.items[0].snippet.thumbnails.default.url;
   }
 
   render() {
     return (
-      <Page
-        category={this.state.category}
-        categories={this.state.categories}
-        handleChange={this.handleChange}
-        pushScreen={this.pushScreen}
-      />
+      <div>
+        <Page AnimeData={this.state.animeData} AnimePv={this.state.animePv} />
+      </div>
     );
   }
 }
 
-Home.propTypes = {
-  history: PropTypes.object,
-};
-
-export default withRouter(Home);
+export default Setting;

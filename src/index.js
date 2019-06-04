@@ -8,9 +8,15 @@ import muiTheme from './services/muiTheme';
 import '@babel/polyfill';
 import 'normalize.css';
 import './services/defaultStyle.css';
+import { LOCAL_STORAGE_KEYS } from './services/constant';
 
-// export const PageContext = createContext();
-export const FullScreenDialogContext = createContext();
+// リストの表示数を解像度に合わせて変化させる
+export const ReportListContext = createContext();
+
+// ローカルストレージKeyが存在しなかった場合、作成
+if (!localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITE_LIST)) {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.FAVORITE_LIST, JSON.stringify([]));
+}
 
 ReactDOM.render(
   <>

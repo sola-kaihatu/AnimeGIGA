@@ -54,5 +54,6 @@ module.exports = env => {
       host: '0.0.0.0',
       historyApiFallback: true,
     },
+    entry: ['@babel/polyfill', './src/index.js'],
   };
 };

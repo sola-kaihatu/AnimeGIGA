@@ -7,7 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import tileData from '../services/tileData';
+// import tileData from '../services/tileData';
 import noImage from '../services/img/noImage.png';
 
 function SingleLineGridList(props) {
@@ -16,7 +16,7 @@ function SingleLineGridList(props) {
   return (
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={2.5}>
-        {tileData.tileData.map(tile => (
+        {props.tileData.map(tile => (
           <GridListTile
             key={tile.id}
             style={{
@@ -29,9 +29,9 @@ function SingleLineGridList(props) {
               objectFit: 'cover',
               objectPosition: 'top',
             }}
-            onClick={() => {
-              alert('クリックなう');
-            }}
+            // onClick={() => {
+            //   alert(tile.title + 'の詳細表示しました(未実装)');
+            // }}
           >
             <img src={tile.img ? tile.img : noImage} />
             <GridListTileBar
@@ -41,8 +41,16 @@ function SingleLineGridList(props) {
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton>
-                  <StarBorderIcon className={classes.title} />
+                <IconButton
+                  onClick={() => {
+                    props.onClickFavoriteButton(tile.id);
+                  }}
+                >
+                  {props.favoriteList.some(favorite => favorite == tile.id) ? (
+                    <StarBorderIcon style={{ color: 'yellow' }} />
+                  ) : (
+                    <StarBorderIcon className={classes.title} />
+                  )}
                 </IconButton>
               }
             />
@@ -81,6 +89,9 @@ const styles = theme => ({
 
 SingleLineGridList.propTypes = {
   classes: PropTypes.object.isRequired,
+  onClickFavoriteButton: PropTypes.func,
+  favoriteList: PropTypes.array,
+  tileData: PropTypes.array,
 };
 
 export default withStyles(styles)(SingleLineGridList);
