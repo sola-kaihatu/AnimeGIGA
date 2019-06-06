@@ -1,44 +1,63 @@
 import React, { Component } from 'react';
 import Page from './Page';
-// import PropTypes from 'prop-types';
-// import { withRouter } from 'react-router';
-import tileData from '../../services/tileData';
-import { LOCAL_STORAGE_KEYS } from '../../services/constant';
+import { getAnimeList, getYoutubeData } from '../../services/api';
+import { LOCAL_STORAGE_KEYS, APIKEY } from '../../services/constant';
 
 class Favorite extends Component {
   constructor() {
     super();
     this.state = {
       favoriteList: [],
-      allTileData: tileData.tileData,
+      animePv: [],
     };
   }
 
-  componentDidMount() {
-    //取り出してパースする
+  async componentDidMount() {
     const favoriteList = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITE_LIST)
     );
-    const favoriteDataList = this.state.allTileData.filter(tileData =>
-      favoriteList.includes(tileData.id)
-    );
+    const animePv = [];
+    for (let i = 0; i < favoriteList.length; i++) {
+      const res = await this.getYoutubeList(favoriteList[i] + ' PV');
+      res.title = favoriteList[i];
+      animePv.push(res);
+    }
 
-    this.setState({ favoriteList: favoriteDataList });
+    this.setState({ favoriteList, animePv });
+  }
+
+  async getAnimeList(period) {
+    const { response, error } = await getAnimeList(period);
+    if (error) {
+      console.log('getAnimeListエラーだわ');
+      return {};
+    }
+    return response.data;
+  }
+
+  async getYoutubeList(searchWord) {
+    const params = {
+      q: searchWord,
+      part: 'snippet',
+      type: 'video',
+      maxResults: '1',
+      key: APIKEY.YOUTUBE_DATA_API_V3_KEY,
+    };
+    const { response, error } = await getYoutubeData(params);
+    if (error) {
+      alert('YoutubeAPIが上限なので自分のkeyにするかしてください');
+      return { snippet: { thumbnails: { high: { url: '' } } } };
+    }
+    return response.data.items[0];
   }
 
   render() {
     return (
       <div>
-        <Page favoriteList={this.state.favoriteList} />
+        <Page animePv={this.state.animePv} />
       </div>
     );
   }
 }
 
-// Favorite.propTypes = {
-//   history: PropTypes.object,
-//   match: PropTypes.object,
-// };
-
 export default Favorite;
-// export default withRouter(Favorite);

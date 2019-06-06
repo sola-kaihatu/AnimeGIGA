@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import Home from './pages/Home/Container';
 import Search from './pages/Search/Container';
 import Favorite from './pages/Favorite/Container';
-import Setting from './pages/Setting/Container';
+import AnimeMain from './pages/AnimeMain/Container';
 import { ReportListContext } from './';
 
 class App extends Component {
@@ -55,10 +54,9 @@ class App extends Component {
           }}
         >
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={AnimeMain} />
             <Route path="/Search/:id" component={Search} />
             <Route path="/Favorite/" component={Favorite} />
-            <Route path="/Setting/" component={Setting} />
           </Switch>
         </ReportListContext.Provider>
       </div>

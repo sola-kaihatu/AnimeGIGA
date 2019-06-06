@@ -26,11 +26,11 @@ const getYoutubeData = params => {
   );
 };
 
-const getRequest = async url => {
+const getRequest = async (url, params) => {
   let response, error;
 
   await axios
-    .get(url)
+    .get(url + params)
     .then(res => {
       response = res;
     })
@@ -41,8 +41,8 @@ const getRequest = async url => {
   return { response, error };
 };
 
-const getAnimeList = () => {
-  return getRequest('http://api.moemoe.tokyo/anime/v1/master/2019/1');
+const getAnimeList = params => {
+  return getRequest('http://api.moemoe.tokyo/anime/v1/master/', params);
 };
 
 export { getAnimeList, getYoutubeData };

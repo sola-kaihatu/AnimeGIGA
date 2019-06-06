@@ -8,12 +8,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import IconButton from '@material-ui/core/IconButton';
 import GridList from '@material-ui/core/GridList';
-import noImage from '../services/img/noImage.png';
-// import { getYoutubeData } from '../services/api';
 import { ReportListContext } from '../';
-import TweetButton from './TweetButton';
+
+import noImage from '../services/img/noImage.png';
 
 class MediaCard extends React.Component {
   constructor() {
@@ -93,7 +94,19 @@ class MediaCard extends React.Component {
                         marginLeft: 'auto',
                       }}
                     >
-                      <TweetButton />
+                      <IconButton
+                        onClick={() => {
+                          this.props.onClickFavoriteButton(animePv.title);
+                        }}
+                      >
+                        {this.props.favoriteList.some(
+                          favorite => favorite == animePv.title
+                        ) ? (
+                          <FavoriteIcon style={{ color: 'red' }} />
+                        ) : (
+                          <FavoriteBorderIcon className={classes.title} />
+                        )}
+                      </IconButton>
                     </div>
                   </CardActions>
                 </Card>
@@ -108,15 +121,14 @@ class MediaCard extends React.Component {
 
 MediaCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  // AnimeData: PropTypes.array,
   animePv: PropTypes.array,
+  onClickFavoriteButton: PropTypes.func,
+  favoriteList: PropTypes.array,
 };
 
 const styles = {
   root: {
     display: 'flex',
-    // flexWrap: 'wrap',
-    // overflow: 'scroll',
     width: '100%',
   },
   gridList: {

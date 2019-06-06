@@ -5,7 +5,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // import tileData from '../services/tileData';
 import noImage from '../services/img/noImage.png';
@@ -47,9 +48,9 @@ function SingleLineGridList(props) {
                   }}
                 >
                   {props.favoriteList.some(favorite => favorite == tile.id) ? (
-                    <StarBorderIcon style={{ color: 'yellow' }} />
+                    <FavoriteIcon style={{ color: 'red' }} />
                   ) : (
-                    <StarBorderIcon className={classes.title} />
+                    <FavoriteBorderIcon className={classes.title} />
                   )}
                 </IconButton>
               }

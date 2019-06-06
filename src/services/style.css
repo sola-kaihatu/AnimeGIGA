@@ -21,3 +21,58 @@
   margin-left: 0.4em;
   background: linear-gradient(90deg, #888, transparent);
 }
+
+.li:hover {
+  box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1); /*浮いた時の影*/
+  transform: translateY(-3px); /*浮く高さ*/
+  transition: 0.3s; /*浮く速さ（秒）*/
+}
+
+.sample1 {
+  animation-name: fadein;
+  animation-duration: 2s;
+  /* animation-iteration-count: infinite; */
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sample2 :hover {
+  animation-name: fadein;
+  animation-duration: 2s;
+  /* animation-iteration-count: infinite; */
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.backgroundImageChange {
+  height: 60vh;
+  width: 100%;
+}
+@media screen and (max-width: 599px) {
+  .backgroundImageChange {
+    background-image: url("../pages/AnimeMain/img/mobileBg.png");
+    background-size: cover;
+  }
+}
+@media screen and (min-width: 600px) {
+  .backgroundImageChange {
+    background-image: url("../pages/AnimeMain/img/bg.png");
+    background-size: cover;
+  }
+}

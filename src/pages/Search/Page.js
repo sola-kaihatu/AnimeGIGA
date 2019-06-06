@@ -6,9 +6,17 @@ const Page = props => {
   return (
     <div>
       <div style={{ margin: '30px 10px 10px 10px' }}>
-        <h3 style={headerStyle}>{props.age}年代　邦楽ヒット曲 ランキング</h3>
+        <h3 style={headerStyle}>
+          {props.animeYear}年{props.animeSeason}期 アニメ
+        </h3>
       </div>
-      <div style={{ marginLeft: '10px', marginRight: '10px' }}>
+      <div
+        style={{
+          marginLeft: '10px',
+          marginRight: '10px',
+          marginBottom: '10px',
+        }}
+      >
         <Accordion selectedAgeListData={props.selectedAgeListData} />
       </div>
     </div>
@@ -24,7 +32,8 @@ const headerStyle = {
 };
 
 Page.propTypes = {
-  age: PropTypes.number,
+  animeYear: PropTypes.string,
+  animeSeason: PropTypes.string,
   selectedAgeListData: PropTypes.array,
 };
 

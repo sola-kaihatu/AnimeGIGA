@@ -17,28 +17,28 @@ const TweetButton = () => {
       }}
     >
       <TwitterShareButton
-        title="Reactでサイト作りました。「MusicRanking」を見に来ませんか？"
+        title="Reactでサイト作りました。「AnimeGIGA」を見に来ませんか？"
         via="@Test"
-        url="http://localhost:3001/#/"
-        hashtags={['A', 'B', 'C']}
+        url="http://phptestp01.php.xdomain.jp/AnimeGIGA/index.html#/"
+        hashtags={['AnimeGIGA']}
         style={{ width: '32px', height: '32px', marginRight: '10px' }}
       >
         <TwitterIcon size={32} round />
       </TwitterShareButton>
       <FacebookShareButton
-        title="Reactでサイト作りました。「MusicRanking」を見に来ませんか？"
+        quote="Reactでサイト作りました。「AnimeGIGA」を見に来ませんか？"
         via="@Test"
-        url="http://localhost:3001/#/"
-        hashtags={['A', 'B', 'C']}
+        url="http://phptestp01.php.xdomain.jp/AnimeGIGA/index.html#/"
+        hashtags={['AnimeGIGA']}
         style={{ width: '32px', height: '32px', marginRight: '10px' }}
       >
         <FacebookIcon size={32} round />
       </FacebookShareButton>
       <LineShareButton
-        title="Reactでサイト作りました。「MusicRanking」を見に来ませんか？"
+        title="Reactでサイト作りました。「AnimeGIGA」を見に来ませんか？"
         via="@Test"
-        url="http://localhost:3001/#/"
-        hashtags={['A', 'B', 'C']}
+        url="http://phptestp01.php.xdomain.jp/AnimeGIGA/index.html#/"
+        hashtags={['AnimeGIGA']}
         style={{ width: '32px', height: '32px' }}
       >
         <LineIcon size={32} round />

@@ -10,29 +10,38 @@ import {
   Button,
 } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import TilePage from '../../components/SingleLineGridList';
+import MediaCards from '../../components/MediaCardsMain';
 import TweetButton from '../../components/TweetButton';
 import { contentsStyle } from '../../services/stylesJS';
-import backgroundImage from './img/background_ image.png';
 
-// import styles from '../../services/style.css';
+import topImage from './img/topImg2.png';
 import '../../services/style.css';
 
 const Page = props => {
-  const menuCategories = [];
+  const ageMenuCategories = [];
+  const seasonMenuCategories = [];
+  const seasonUrl = Number(props.season) + 1;
 
-  for (let i = 0; i < props.categories.length; i += 1) {
-    menuCategories.push(
+  for (let i = 0; i < props.animeAgeList.length; i += 1) {
+    ageMenuCategories.push(
       <MenuItem key={i} value={i}>
-        {props.categories[i]}
+        {props.animeAgeList[i]}
       </MenuItem>
     );
   }
+  for (let i = 0; i < props.animeSeasonList.length; i += 1) {
+    seasonMenuCategories.push(
+      <MenuItem key={i} value={i}>
+        {props.animeSeasonList[i]}
+      </MenuItem>
+    );
+  }
+
   return (
     // <div style={{ ...contentsStyle, height: 'calc(var(--full-vh, 1vh))' }}>
     <div style={{ contentsStyle }}>
       <AppBar position="static" style={headerStyle}>
-        <div style={headerTextStyle}>MusicRanking</div>
+        <div style={headerTextStyle}>Anime GIGA</div>
         <Button
           color="inherit"
           style={{ marginLeft: 'auto' }}
@@ -43,10 +52,29 @@ const Page = props => {
           MyList
         </Button>
       </AppBar>
-      <div style={backgroundImageStyle}>
-        <div style={mainTextStyle}>MusicRanking</div>
+      <div style={{ height: '50px' }} />
+      <div className="backgroundImageChange">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            paddingTop: '10px',
+            paddingBottom: '10px',
+          }}
+        >
+          <div style={mainTextStyle}>AnimeGIGA</div>
+          <div
+            className="sample1"
+            style={{ width: '30vmin', height: '30vmin' }}
+          >
+            <img
+              src={topImage}
+              style={{ width: '26vmin', height: '50vmin', objectFit: 'cover' }}
+            />
+          </div>
+        </div>
         <div style={subTextStyle}>
-          年代別のヒット曲を検索しよう！懐かしのあの曲をSNSでシェア！
+          最新のアニメまで検索！お気に入り！PVをシェア！
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Grid container justify="center" style={selectAreaStyle}>
@@ -54,8 +82,8 @@ const Page = props => {
               <div style={selectAreaDetailStyle}>
                 <MuiThemeProvider theme={selectBoxTheme}>
                   <FormControl style={selectBoxStyle}>
-                    <InputLabel style={{ color: 'white', fontWeight: 'bold' }}>
-                      年代選択
+                    <InputLabel style={{ color: 'black', fontWeight: 'bold' }}>
+                      年代
                     </InputLabel>
                     <Select
                       value={props.category}
@@ -64,7 +92,21 @@ const Page = props => {
                         name: 'category',
                       }}
                     >
-                      {menuCategories}
+                      {ageMenuCategories}
+                    </Select>
+                  </FormControl>
+                  <FormControl style={selectBoxStyle}>
+                    <InputLabel style={{ color: 'black', fontWeight: 'bold' }}>
+                      クール
+                    </InputLabel>
+                    <Select
+                      value={props.season}
+                      onChange={props.handleChange}
+                      inputProps={{
+                        name: 'season',
+                      }}
+                    >
+                      {seasonMenuCategories}
                     </Select>
                   </FormControl>
                 </MuiThemeProvider>
@@ -77,7 +119,9 @@ const Page = props => {
                     style={buttonStyle}
                     onClick={() => {
                       props.pushScreen(
-                        '/Search/' + props.categories[props.category]
+                        '/Search/' +
+                          props.animeAgeList[props.category] +
+                          seasonUrl
                       );
                     }}
                   >
@@ -95,7 +139,7 @@ const Page = props => {
             background: 'linear-gradient(transparent 70%, yellow 70%)',
           }}
         >
-          MusicRankingとは
+          Anime GIGAとは
         </p>
       </div>
       <div
@@ -104,25 +148,29 @@ const Page = props => {
           display: 'flex',
           justifyContent: 'center',
         }}
+        className="sample1"
       >
-        Music
-        Rankingはアカウント登録や、アプリのインストールが不要で、懐かしの音楽を検索、お気に入りリストの作成が出来ます！
-        お気に入りの曲を是非シェアしてください！
+        AnimeGIGA
+        はアカウント登録や、アプリのインストールが不要で、最新のアニメを検索しお気に入りリストの作成が出来ます！
+        アニメPVへのリンクも搭載！
       </div>
-      <div
-        style={{
-          width: '100vw',
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'flex-end',
-        }}
-      >
-        <TilePage
+      <div className="s1">
+        <p
+          style={{
+            marginTop: '20px',
+            background: 'linear-gradient(transparent 70%, yellow 70%)',
+          }}
+        >
+          2019年1期 最新アニメ
+        </p>
+      </div>
+      <div className="sample1">
+        <MediaCards
           onClickFavoriteButton={e => {
             props.onClickFavoriteButton(e);
           }}
           favoriteList={props.favoriteList}
-          tileData={props.allTileData}
+          animePv={props.animePv}
         />
       </div>
       <div
@@ -160,7 +208,7 @@ const selectBoxTheme = createMuiTheme({
   overrides: {
     MuiSelect: {
       select: {
-        color: 'white',
+        color: 'black',
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
         fontWeight: 'bold',
       },
@@ -179,28 +227,23 @@ const headerStyle = {
   backgroundColor: 'rgba(0, 0, 0, .8)',
   flexDirection: 'row',
   borderLeft: 'solid 5px #7db4e6',
+  position: 'fixed',
 };
 
 const headerTextStyle = {
+  fontSize: '20px',
   marginLeft: '20px',
   fontWeight: 'bold',
   display: 'flex',
   alignItems: 'center',
-};
-
-const backgroundImageStyle = {
-  height: '60vh',
-  width: '100%',
-  backgroundImage: 'url(' + backgroundImage + ')',
-  backgroundSize: 'cover',
+  fontFamily: 'Londrina Shadow',
 };
 
 const mainTextStyle = {
-  // paddingTop: '4vh',
   paddingTop: 'calc(var(--mobileVh, 4vh))',
   fontSize: '17vmin',
   fontFamily: 'Londrina Shadow',
-  color: 'white',
+  color: 'black',
   display: 'flex',
   justifyContent: 'center',
 };
@@ -209,7 +252,7 @@ const subTextStyle = {
   paddingRight: '1rem',
   paddingLeft: '1rem',
   fontWeight: 'bold',
-  color: 'white',
+  color: 'black',
   display: 'flex',
   justifyContent: 'center',
 };
@@ -226,7 +269,8 @@ const selectAreaDetailStyle = {
 
 const selectBoxStyle = {
   marginTop: '5vmin',
-  width: '17rem',
+  marginLeft: '2vmin',
+  width: '9rem',
 };
 
 const buttonStyle = {
@@ -237,12 +281,14 @@ const buttonStyle = {
 
 Page.propTypes = {
   category: PropTypes.any.isRequired,
-  categories: PropTypes.array.isRequired,
+  season: PropTypes.any.isRequired,
+  animeAgeList: PropTypes.array.isRequired,
+  animeSeasonList: PropTypes.array.isRequired,
   handleChange: PropTypes.func,
   pushScreen: PropTypes.func,
   onClickFavoriteButton: PropTypes.func,
   favoriteList: PropTypes.array,
-  allTileData: PropTypes.array,
+  animePv: PropTypes.array,
 };
 
 export default Page;
