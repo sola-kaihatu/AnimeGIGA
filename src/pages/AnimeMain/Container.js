@@ -6,6 +6,8 @@ import tileData from '../../services/tileData';
 import { LOCAL_STORAGE_KEYS, APIKEY } from '../../services/constant';
 import { getAnimeList, getYoutubeData } from '../../services/api';
 
+import anime from 'lib/anime.es.js';
+
 class AnimeMain extends Component {
   constructor() {
     super();
@@ -23,6 +25,9 @@ class AnimeMain extends Component {
   }
 
   async componentDidMount() {
+    var elem = document.getElementById('slideMainImage');
+    this.slideMainImage(elem);
+
     //取り出してパースする
     const favoriteList = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.FAVORITE_LIST)
@@ -53,6 +58,14 @@ class AnimeMain extends Component {
     this.setState({ favoriteList: newFavoriteList, animePv });
   }
 
+  slideMainImage(elem) {
+    anime({
+      targets: elem,
+      translateX: -window.parent.screen.width * 2,
+      duration: 300000,
+    });
+  }
+
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -74,8 +87,8 @@ class AnimeMain extends Component {
         .concat();
     }
 
-    if (newFavoriteList.length >= 4) {
-      alert('マイリストが上限です ３件まで登録可能です');
+    if (newFavoriteList.length >= 6) {
+      alert('マイリストが上限です 5件まで登録可能です');
       return;
     }
 

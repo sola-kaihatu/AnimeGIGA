@@ -64,15 +64,60 @@
   height: 60vh;
   width: 100%;
 }
-@media screen and (max-width: 599px) {
+
+@media screen and (max-width: 414px) {
   .backgroundImageChange {
     background-image: url("../pages/AnimeMain/img/mobileBg.png");
     background-size: cover;
   }
+  .searchButtonStyle {
+    width: 18rem;
+  }
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+  .backgroundImageChange {
+    background-image: url("../pages/AnimeMain/img/ipadBg.png");
+    background-size: cover;
+  }
+  .selectArea {
+    display: flex;
+    justify-content: center;
+  }
+  .searchButtonStyle {
+    width: 9rem;
+  }
+}
+@media screen and (min-width: 1025px) {
   .backgroundImageChange {
     background-image: url("../pages/AnimeMain/img/bg.png");
     background-size: cover;
   }
+  .selectArea {
+    display: flex;
+    justify-content: center;
+  }
+  .searchButtonStyle {
+    width: 9rem;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}
+.typewriterStyle {
+  font-family: monospace;
+  width: 31ch;
+  border-right: 0.08em solid;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 5s steps(30, end), caret 0.5s step-end infinite;
+  font-weight: bold;
+  color: black;
 }

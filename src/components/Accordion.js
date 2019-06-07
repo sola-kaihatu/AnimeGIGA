@@ -6,6 +6,10 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Grid } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 import TweetButton from './TweetButton';
 
 class ControlledExpansionPanels extends React.Component {
@@ -44,18 +48,30 @@ class ControlledExpansionPanels extends React.Component {
               style={{ height: '250px', padding: '4px 12px 12px' }}
             >
               <Grid container justify="center">
-                <Grid item xs={12} sm={3} style={{ height: '190px' }} />
-                <Grid item xs={12} sm={9} style={{ height: '40px' }}>
+                <Grid item xs={12} sm={4} style={{ height: '190px' }} />
+                <Grid item xs={12} sm={8} style={{ height: '40px' }}>
                   <div
                     style={{
                       display: 'flex',
-                      // justifyContent: 'flex-end',
                       marginTop: '1vmin',
                       marginLeft: '10px',
-                      // width: '50%',
                     }}
                   >
                     <TweetButton />
+                    <IconButton
+                      style={{ marginLeft: '20px', padding: '0px' }}
+                      onClick={() => {
+                        this.props.onClickFavoriteButton(tile.title);
+                      }}
+                    >
+                      {this.props.favoriteList.some(
+                        favorite => favorite == tile.title
+                      ) ? (
+                        <FavoriteIcon style={{ color: 'red' }} />
+                      ) : (
+                        <FavoriteBorderIcon className={classes.title} />
+                      )}
+                    </IconButton>
                   </div>
                 </Grid>
               </Grid>
@@ -70,6 +86,8 @@ class ControlledExpansionPanels extends React.Component {
 ControlledExpansionPanels.propTypes = {
   classes: PropTypes.object.isRequired,
   selectedAgeListData: PropTypes.array,
+  onClickFavoriteButton: PropTypes.func,
+  favoriteList: PropTypes.array,
 };
 
 const styles = theme => ({

@@ -24,10 +24,10 @@ class App extends Component {
     if (window.matchMedia('(max-width:599px)').matches) {
       // const vh = window.innerHeight;
       // let vh = window.innerHeight * 0.01;
-      let vh2 = window.parent.screen.height / 100;
+      let vh = window.parent.screen.height / 100;
       // console.log(vh2, window.parent.screen.height);
       // document.documentElement.style.setProperty('--full-vh', `${vh}px`);
-      document.documentElement.style.setProperty('--mobileVh', `${vh2}px`);
+      document.documentElement.style.setProperty('--mobileVh', `${vh}px`);
       this.setState({ reportListCol: 1 });
     } else if (
       window.matchMedia('(min-width: 600px) and (max-width: 959px)').matches

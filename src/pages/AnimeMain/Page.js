@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid,
   FormControl,
   Select,
   InputLabel,
@@ -14,7 +13,7 @@ import MediaCards from '../../components/MediaCardsMain';
 import TweetButton from '../../components/TweetButton';
 import { contentsStyle } from '../../services/stylesJS';
 
-import topImage from './img/topImg2.png';
+import mainImg from './img/topNewImg.png';
 import '../../services/style.css';
 
 const Page = props => {
@@ -54,88 +53,74 @@ const Page = props => {
       </AppBar>
       <div style={{ height: '50px' }} />
       <div className="backgroundImageChange">
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            paddingTop: '10px',
-            paddingBottom: '10px',
-          }}
-        >
+        <div style={mainTextAreaStyle}>
           <div style={mainTextStyle}>AnimeGIGA</div>
-          <div
-            className="sample1"
-            style={{ width: '30vmin', height: '30vmin' }}
-          >
-            <img
-              src={topImage}
-              style={{ width: '26vmin', height: '50vmin', objectFit: 'cover' }}
-            />
-          </div>
         </div>
         <div style={subTextStyle}>
-          最新のアニメまで検索！お気に入り！PVをシェア！
+          <div className="typewriterStyle">
+            アニメを 検索！お気に入り！PVシェア！
+          </div>
+        </div>
+        <div
+          style={{
+            height: '45%',
+            display: 'flex',
+            justifyContent: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          <img id="slideMainImage" src={mainImg} style={mainImageStyle} />
+        </div>
+      </div>
+      <div className="selectArea">
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <MuiThemeProvider theme={selectBoxTheme}>
+            <FormControl style={selectBoxStyle}>
+              <InputLabel style={{ color: 'black' }}>年代</InputLabel>
+              <Select
+                value={props.category}
+                onChange={props.handleChange}
+                inputProps={{
+                  name: 'category',
+                }}
+              >
+                {ageMenuCategories}
+              </Select>
+            </FormControl>
+            <FormControl style={selectBoxStyle}>
+              <InputLabel style={{ color: 'black' }}>クール</InputLabel>
+              <Select
+                value={props.season}
+                onChange={props.handleChange}
+                inputProps={{
+                  name: 'season',
+                }}
+              >
+                {seasonMenuCategories}
+              </Select>
+            </FormControl>
+          </MuiThemeProvider>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Grid container justify="center" style={selectAreaStyle}>
-            <Grid item xs={12} sm={7}>
-              <div style={selectAreaDetailStyle}>
-                <MuiThemeProvider theme={selectBoxTheme}>
-                  <FormControl style={selectBoxStyle}>
-                    <InputLabel style={{ color: 'black', fontWeight: 'bold' }}>
-                      年代
-                    </InputLabel>
-                    <Select
-                      value={props.category}
-                      onChange={props.handleChange}
-                      inputProps={{
-                        name: 'category',
-                      }}
-                    >
-                      {ageMenuCategories}
-                    </Select>
-                  </FormControl>
-                  <FormControl style={selectBoxStyle}>
-                    <InputLabel style={{ color: 'black', fontWeight: 'bold' }}>
-                      クール
-                    </InputLabel>
-                    <Select
-                      value={props.season}
-                      onChange={props.handleChange}
-                      inputProps={{
-                        name: 'season',
-                      }}
-                    >
-                      {seasonMenuCategories}
-                    </Select>
-                  </FormControl>
-                </MuiThemeProvider>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={5}>
-              <div style={selectAreaDetailStyle}>
-                <MuiThemeProvider theme={selectButtonTheme}>
-                  <Button
-                    style={buttonStyle}
-                    onClick={() => {
-                      props.pushScreen(
-                        '/Search/' +
-                          props.animeAgeList[props.category] +
-                          seasonUrl
-                      );
-                    }}
-                  >
-                    ランキング検索
-                  </Button>
-                </MuiThemeProvider>
-              </div>
-            </Grid>
-          </Grid>
+          <MuiThemeProvider theme={selectButtonTheme}>
+            <Button
+              className="searchButtonStyle"
+              style={buttonStyle}
+              onClick={() => {
+                props.pushScreen(
+                  '/Search/' + props.animeAgeList[props.category] + seasonUrl
+                );
+              }}
+            >
+              アニメ検索
+            </Button>
+          </MuiThemeProvider>
         </div>
       </div>
       <div className="s1">
         <p
           style={{
+            marginTop: '20px',
             background: 'linear-gradient(transparent 70%, yellow 70%)',
           }}
         >
@@ -239,44 +224,51 @@ const headerTextStyle = {
   fontFamily: 'Londrina Shadow',
 };
 
+const mainTextAreaStyle = {
+  height: '45%',
+  display: 'flex',
+  justifyContent: 'center',
+  paddingTop: '10px',
+  overflow: 'hidden',
+};
+
 const mainTextStyle = {
-  paddingTop: 'calc(var(--mobileVh, 4vh))',
   fontSize: '17vmin',
   fontFamily: 'Londrina Shadow',
   color: 'black',
   display: 'flex',
   justifyContent: 'center',
+  alignSelf: 'flex-end',
 };
 
 const subTextStyle = {
   paddingRight: '1rem',
   paddingLeft: '1rem',
-  fontWeight: 'bold',
-  color: 'black',
   display: 'flex',
   justifyContent: 'center',
+  margin: 0,
 };
 
-const selectAreaStyle = {
-  width: '100vw',
-  maxWidth: '35rem',
-};
-
-const selectAreaDetailStyle = {
-  display: 'flex',
-  justifyContent: 'center',
+const mainImageStyle = {
+  marginRight: '-130vw',
+  width: '70vmin',
+  height: '22vmin',
+  objectFit: 'cover',
+  alignSelf: 'flex-end',
 };
 
 const selectBoxStyle = {
   marginTop: '5vmin',
   marginLeft: '2vmin',
-  width: '9rem',
+  width: '15vw',
+  maxWidth: '20rem',
+  minWidth: '9rem',
 };
 
 const buttonStyle = {
-  marginTop: '5vmin',
-  width: '12rem',
-  height: '3rem',
+  marginTop: '6.5vmin',
+  height: '2rem',
+  marginLeft: '2vmin',
 };
 
 Page.propTypes = {
