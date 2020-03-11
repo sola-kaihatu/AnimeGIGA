@@ -8,3 +8,5 @@
 
 ◆ 使い方
 「npm i」して「constant.js」の「APIkey」に自分の入れてください
+
+テスト更新
